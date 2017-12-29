@@ -46,16 +46,18 @@ def multilayer_perceptron(x, weights, biases):
 
 
 
-init = tf.global_variables_initializer()
+
 
 output = multilayer_perceptron(x, weights, biases)
 cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=output, labels=y))
-#optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
+optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
 
+## has to be called after defining all tensors
+init = tf.global_variables_initializer()
 
 with tf.Session() as sess:
 
     sess.run(init)
-    cost = sess.run([cost], feed_dict={x:train_X, y:train_Y})
-    print(cost)
-    
+    for _ in range(epochs):
+        _, c = sess.run([optimizer, cost], feed_dict={x:train_X, y:train_Y})
+        print(c)
