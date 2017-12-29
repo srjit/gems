@@ -49,8 +49,14 @@ def multilayer_perceptron(x, weights, biases):
 
 
 output = multilayer_perceptron(x, weights, biases)
+
+# get the index with highest argument (index that maximizes the output)
 cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=output, labels=y))
 optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
+
+correct_count = tf.equal(tf.argmax(output, 1), tf.argmax(y, 1))
+accuracy = tf.reduce_mean(tf.cast(correct_count, "float"))
+
 
 ## has to be called after defining all tensors
 init = tf.global_variables_initializer()
@@ -59,5 +65,5 @@ with tf.Session() as sess:
 
     sess.run(init)
     for _ in range(epochs):
-        _, c = sess.run([optimizer, cost], feed_dict={x:train_X, y:train_Y})
-        print(c)
+        acc, _, c = sess.run([accuracy, optimizer, cost], feed_dict={x:train_X, y:train_Y})
+        print(acc)
