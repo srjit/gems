@@ -1,5 +1,4 @@
 ## imports
-
 import pandas as pd
 import numpy as np
 
@@ -37,7 +36,7 @@ Y_test = one_hot_of_winner_test.as_matrix()
 
 
 learning_rate = 0.001
-training_epochs = 5000
+training_epochs = 500
 batch_size = 100
 display_step = 1
 

@@ -45,9 +45,6 @@ def multilayer_perceptron(x, weights, biases):
     return out_layer
 
 
-
-
-
 output = multilayer_perceptron(x, weights, biases)
 
 # get the index with highest argument (index that maximizes the output)
@@ -62,7 +59,6 @@ accuracy = tf.reduce_mean(tf.cast(correct_count, "float"))
 init = tf.global_variables_initializer()
 
 with tf.Session() as sess:
-
     sess.run(init)
     for _ in range(epochs):
         acc, _, c = sess.run([accuracy, optimizer, cost], feed_dict={x:train_X, y:train_Y})
