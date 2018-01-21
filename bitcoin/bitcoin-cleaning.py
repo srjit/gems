@@ -40,3 +40,18 @@ data['RollingMin'] = data['Close'].shift(1).rolling(signal_lookback, min_periods
 data.loc[data['RollingMax'] < data['Close'], 'Buy'] = 1
 data.loc[data['RollingMin'] > data['Close'], 'Sell'] = -1
 
+
+## is our logic good (Have we bought/sold our coins at the right time) - let's explore this with plots
+import matplotlib
+import matplotlib.pyplot as plt
+
+fig,ax1 = plt.subplots(1,1)
+ax1.plot(data['Close'])
+y = ax1.get_ylim()
+ax1.set_ylim(y[0] - (y[1]-y[0])*0.4, y[1])
+
+ax2 = ax1.twinx()
+ax2.set_position(matplotlib.transforms.Bbox([[0.125,0.1],[0.9,0.32]]))
+ax2.plot(data['Buy'], color='#77dd77')
+ax2.plot(data['Sell'], color='#dd4444')
+plt.show()
